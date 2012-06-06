@@ -1,0 +1,5 @@
+--smart-case
+# --all-types
+--text
+--type-set=myignores=.lst,.size,.sym
+--nomyignores
