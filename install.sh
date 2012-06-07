@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for name in `ls -A | grep -v install.sh | grep -v \.git | grep -v README`
+for name in `ls -A | grep -v install.sh | grep -v \.git$ | grep -v README`
 do
   file="${HOME}/$name"
   if [ -h "$file" ]; then
