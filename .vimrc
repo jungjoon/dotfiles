@@ -28,6 +28,9 @@ noremap <C-a> :Ack <C-r><C-w> .
 " Bundle plug-in packaging system SETTINGS
 " ======================================================================== "
 " Bundle setting from https://github.com/gmarik/vendle#readme
+"   Sumarry
+"     git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+"     vim -c BundleInstall
 filetype off                   " required!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
