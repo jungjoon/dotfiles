@@ -63,9 +63,10 @@ Bundle 'Zenburn'
 " Bundle 'FuzzyFinder'
 " Bundle 'rails.vim'
 " non github repos
-Bundle 'https://github.com/wincent/Command-T'
+" Bundle 'https://github.com/wincent/Command-T'
 Bundle 'ack.vim'
 Bundle 'taglist.vim'
+Bundle 'ctrlp.vim'
 " ...
 
 filetype plugin indent on     " required! 
