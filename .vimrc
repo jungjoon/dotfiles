@@ -1,7 +1,7 @@
 " ======================================================================== "
 " BASIC SETTINGS
 " ======================================================================== "
-set tags=~/tz/tags,./tags,../tags,../../tags,../../../tags
+set tags=tags,./tags,../tags,../../tags,../../../tags,../../../../tags,../../../../../tags
 
 set nocompatible               " be iMproved
 set hlsearch
@@ -21,8 +21,19 @@ noremap <C-k> :cp<CR>
 " noremap <C-h> :cr<CR>
 " noremap <C-l> :cla<CR>
 
-" ack for current word
-noremap <C-a> :Ack <C-r><C-w> .
+let g:newgrp="grp"
+function! NewGrep(args)
+    let grepprg_bak=&grepprg
+    exec "set grepprg=" . g:newgrp
+    execute "silent! grep " . a:args
+    botright copen
+    let &grepprg=grepprg_bak
+    exec "redraw!"
+endfunction
+command! -nargs=* -complete=file NewGrep call NewGrep(<q-args>)
+" grep for current word
+noremap <C-a> :NewGrep <C-r><C-w> .<CR>
+
 
 " ======================================================================== "
 " Bundle plug-in packaging system SETTINGS
@@ -64,7 +75,6 @@ Bundle 'Zenburn'
 " Bundle 'rails.vim'
 " non github repos
 " Bundle 'https://github.com/wincent/Command-T'
-Bundle 'ack.vim'
 Bundle 'taglist.vim'
 Bundle 'ctrlp.vim'
 " ...
@@ -96,6 +106,9 @@ hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow'
 " for clang-components
 let g:clang_complete_auto = 0
 let g:clang_complete_copen = 1
+
+" ctrl-p
+let g:ctrlp_map = '\t'
 
 " http://vimcasts.org/episodes/show-invisibles/
 nmap <leader>l :set list!<CR>
