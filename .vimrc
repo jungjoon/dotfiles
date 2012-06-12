@@ -8,6 +8,7 @@ set hlsearch
 set ruler
 set ts=4 sts=4 sw=4 expandtab
 set incsearch
+set mouse=a
 
 autocmd CursorMoved * silent! exe printf('match IncSearch /\<%s\>/', expand('<cword>'))
 
@@ -109,6 +110,7 @@ let g:clang_complete_copen = 1
 
 " ctrl-p
 let g:ctrlp_map = '\t'
+" let g:ctrlp_user_command = 'find %s -type f'
 
 " http://vimcasts.org/episodes/show-invisibles/
 nmap <leader>l :set list!<CR>

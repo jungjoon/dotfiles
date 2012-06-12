@@ -10,5 +10,7 @@ grep    \
     --exclude=*.lst     \
     --exclude=*.size    \
     --exclude=*.sym     \
+    --exclude=.*.swp    \
+    --exclude=.*.o.cmd    \
     --exclude=tags      \
     $* .
