@@ -21,6 +21,7 @@ noremap <C-j> :cn<CR>
 noremap <C-k> :cp<CR>
 " noremap <C-h> :cr<CR>
 " noremap <C-l> :cla<CR>
+imap <C-g> <ESC>
 
 let g:newgrp="grp"
 function! NewGrep(args)
@@ -34,6 +35,8 @@ endfunction
 command! -nargs=* -complete=file NewGrep call NewGrep(<q-args>)
 " grep for current word
 noremap <C-a> :NewGrep <C-r><C-w> .<CR>
+
+noremap <leader>r :w<CR>:!%:p<CR>
 
 
 " ======================================================================== "
@@ -78,6 +81,7 @@ Bundle 'Zenburn'
 " Bundle 'https://github.com/wincent/Command-T'
 Bundle 'taglist.vim'
 Bundle 'ctrlp.vim'
+Bundle 'https://github.com/aaronbieber/quicktask'
 " ...
 
 filetype plugin indent on     " required! 
