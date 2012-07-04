@@ -1,0 +1,8 @@
+#!/bin/sh
+if [ $# != 1 ]; then
+    echo "input filename"
+    exit
+fi
+
+openssl aes-256-cbc -d -a -in $1
+
