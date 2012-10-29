@@ -13,4 +13,5 @@ grep    \
     --exclude=.*.swp    \
     --exclude=.*.o.cmd    \
     --exclude=tags      \
+    $GRP_OPTIONS  \
     $* .

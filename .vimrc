@@ -34,7 +34,7 @@ function! NewGrep(args)
 endfunction
 command! -nargs=* -complete=file NewGrep call NewGrep(<q-args>)
 " grep for current word
-noremap <C-a> :NewGrep <C-r><C-w> .<CR>
+noremap <C-a> :NewGrep <C-r><C-w><CR>
 
 noremap <leader>r :w<CR>:!%:p<CR>
 
@@ -116,6 +116,13 @@ let g:clang_complete_copen = 1
 let g:ctrlp_map = '\t'
 " let g:ctrlp_user_command = 'find %s -type f'
 
+let g:ctrlp_custom_ignore = {
+      \ 'dir': '\.git$\|\.hg$\|\.svn$\|__pycache__$' . $CTRLP_IGNORE_DIR_OPTIONS,
+      \ 'file': '\.pyc$\|\.so$\|\.swp$\|\.o$',
+      \ }
+
+au VimEnter,VimResized * let g:ctrlp_max_height = &lines
+
 " http://vimcasts.org/episodes/show-invisibles/
 nmap <leader>l :set list!<CR>
 set listchars=tab:»\ ,eol:¬
@@ -123,3 +130,7 @@ highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 
 " colo zenburn
+
+" private
+nnoremap ~ A<C-V>	 <ESC>
+let g:svndiff_ignore_whitespace_tail = 1
