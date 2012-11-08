@@ -5,3 +5,4 @@
 	email = jungjoon@gmail.com
 [alias]
     st = status
+    co = checkout

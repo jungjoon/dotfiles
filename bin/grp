@@ -1,6 +1,7 @@
 #!/bin/bash
 grep    \
-    -rnI --color        \
+    -rnI                \
+    --color             \
     --exclude-dir=\.bzr \
     --exclude-dir=\.git \
     --exclude-dir=\.hg  \

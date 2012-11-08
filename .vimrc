@@ -1,7 +1,7 @@
 " ======================================================================== "
 " BASIC SETTINGS
 " ======================================================================== "
-set tags=tags,./tags,../tags,../../tags,../../../tags,../../../../tags,../../../../../tags
+set tags=tags,./tags,../tags,../../tags,../../../tags,../../../../tags,../../../../../tags,../../../../../../tags,../../../../../../../tags
 
 set nocompatible               " be iMproved
 set hlsearch
@@ -15,6 +15,8 @@ autocmd CursorMoved * silent! exe printf('match IncSearch /\<%s\>/', expand('<cw
 " let mapleader = "_"
 
 vmap gl :<C-U>!svn blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+vmap gc :w! ~/.tmp12345<CR>
+noremap <leader>p :r ~/.tmp12345<CR>
 
 " for quickfix list
 noremap <C-j> :cn<CR>
