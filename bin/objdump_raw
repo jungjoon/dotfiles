@@ -1,0 +1,25 @@
+#!/bin/bash
+
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT INT TERM HUP
+
+if [ $# -lt 1 ]
+then
+    ${CROSS_COMPILE}objdump
+    exit $?
+fi
+
+# create an empty file
+touch $tmpdir/empty.c
+
+# compile this empty file
+${CROSS_COMPILE}gcc -c -o $tmpdir/empty.o $tmpdir/empty.c
+
+# add binary as a raw section
+${CROSS_COMPILE}objcopy --add-section raw=${!#} $tmpdir/empty.o
+
+# remove ".comment" section to join
+${CROSS_COMPILE}objcopy --remove-section .comment $tmpdir/empty.o
+
+# now run objdump on it
+${CROSS_COMPILE}objdump ${@:1:$(($#-1))} $tmpdir/empty.o
