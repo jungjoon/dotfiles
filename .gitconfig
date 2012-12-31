@@ -6,3 +6,6 @@
 [alias]
     st = status
     co = checkout
+    br = branch
+    df = diff
+    gl = log --oneline --graph
