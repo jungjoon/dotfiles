@@ -19,7 +19,7 @@ def main
     branch = "unknown"
     ex_st_mod = false
     ex_unst_mod = false
-    ex_add = false
+    ex_unst_add = false
 
     if input =~ /^$/
         return 0
@@ -35,9 +35,10 @@ def main
 
     # puts ex_st_mod, ex_unst_mod, ex_unst_add
 
-    branch_color = BGREEN
+    branch_color = COLOR_OFF
+    branch_color = BGREEN if ex_unst_add
     branch_color = BBLUE if ex_st_mod
-    branch_color = BRED if ex_unst_mod || ex_unst_add
+    branch_color = BRED if ex_unst_mod
 
     # ?: new file, +: staged mod, *: unstaged mod
     flags = " "
