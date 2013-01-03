@@ -20,6 +20,7 @@ def main
     ex_st_mod = false
     ex_unst_mod = false
     ex_unst_add = false
+    relation_with_tracking = ""
 
     if input =~ /^$/
         return 0
@@ -27,6 +28,14 @@ def main
 
     if input =~ /^# On branch (.*)/
         branch = $1
+    end
+
+    if input =~ /^# Your branch is ahead of '.*' by (.*) commit/
+        relation_with_tracking = ":+#{$1}"
+    elsif input =~ /^# Your branch is behind '.*' by (.*) commit/
+        relation_with_tracking = ":-#{$1}"
+    elsif input =~ /^# Your branch and '.*' have diverged/
+        relation_with_tracking = ":<"
     end
 
     ex_st_mod = (input =~ /^# Changes to be committed/)
@@ -50,7 +59,7 @@ def main
 
     format = ARGV[0] || "%s"
 
-    print format % "#{branch_color}#{branch}#{flags}#{COLOR_OFF}"
+    print format % "#{branch_color}#{branch}#{BCYAN}#{relation_with_tracking}#{COLOR_OFF}#{flags}#{COLOR_OFF}"
 end
 
 main

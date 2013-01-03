@@ -10,3 +10,6 @@
     df = diff
     gl = log --graph --date-order -C -M --pretty=format:\"<%h>%x09%ad%x09%an:%x09%Cgreen%s%Creset%Cred%d%Creset\" --date=relative
     gla = !git log --graph --date-order -C -M --pretty=format:\"<%h>%x09%ad%x09%an:%x09%s%Cgreen%d%Creset\" --date=relative --all | egrep --color 'HEAD|'
+
+[push]
+	default = current
