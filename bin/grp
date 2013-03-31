@@ -8,9 +8,7 @@ grep    \
     --exclude-dir=\.svn \
     --exclude-dir=build \
     --exclude-dir=dist  \
-    --exclude=*.lst     \
     --exclude=*.size    \
-    --exclude=*.sym     \
     --exclude=.*.swp    \
     --exclude=.*.o.cmd    \
     --exclude=tags      \
