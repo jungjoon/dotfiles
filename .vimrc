@@ -1,4 +1,66 @@
 " ======================================================================== "
+" Bundle plug-in packaging system SETTINGS
+" ======================================================================== "
+" Bundle setting from https://github.com/gmarik/vundle#readme
+"   Sumarry
+"     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"     vim -c BundleInstall
+set nocompatible               " be iMproved
+filetype off                   " required!
+set rtp+=~/.vim/bundle/Vundle.vim
+
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" My Bundles here:
+"
+" original repos on github
+" Plugin 'tpope/vim-fugitive'
+" Plugin 'Lokaltog/vim-easymotion'
+" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" vim-scripts repos
+Plugin 'vcscommand.vim'
+Plugin 'svndiff'
+Plugin 'clang-complete'
+
+Plugin 'darkslategray.vim'
+Plugin 'matrix.vim'
+Plugin 'matrix.vim--Yang'
+Plugin 'freya'
+Plugin 'jellybeans.vim'
+Plugin 'PapayaWhip'
+Plugin 'Relaxed-Green'
+Plugin 'Zenburn'
+" Plugin 'all-colors-pack'
+" Plugin 'L9'
+" Plugin 'FuzzyFinder'
+" Plugin 'rails.vim'
+" non github repos
+" Plugin 'https://github.com/wincent/Command-T'
+Plugin 'taglist.vim'
+Plugin 'ctrlp.vim'
+Plugin 'https://github.com/aaronbieber/quicktask'
+Plugin 'bling/vim-airline'
+" ...
+
+call vundle#end()
+filetype plugin indent on     " required! 
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
+
+
+
+
+" ======================================================================== "
 " BASIC SETTINGS
 " ======================================================================== "
 set tags=tags,./tags,../tags,../../tags,../../../tags,../../../../tags,../../../../../tags,../../../../../../tags,../../../../../../../tags
@@ -41,61 +103,6 @@ noremap <C-a> :NewGrep <C-r><C-w><CR>
 noremap <leader>r :w<CR>:!%:p<CR>
 
 
-" ======================================================================== "
-" Bundle plug-in packaging system SETTINGS
-" ======================================================================== "
-" Bundle setting from https://github.com/gmarik/vundle#readme
-"   Sumarry
-"     git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-"     vim -c BundleInstall
-filetype off                   " required!
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
-
-" My Bundles here:
-"
-" original repos on github
-" Bundle 'tpope/vim-fugitive'
-" Bundle 'Lokaltog/vim-easymotion'
-" Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-" vim-scripts repos
-Bundle 'vcscommand.vim'
-Bundle 'svndiff'
-Bundle 'clang-complete'
-
-Bundle 'darkslategray.vim'
-Bundle 'matrix.vim'
-Bundle 'matrix.vim--Yang'
-Bundle 'freya'
-Bundle 'jellybeans.vim'
-Bundle 'PapayaWhip'
-Bundle 'Relaxed-Green'
-Bundle 'Zenburn'
-" Bundle 'all-colors-pack'
-" Bundle 'L9'
-" Bundle 'FuzzyFinder'
-" Bundle 'rails.vim'
-" non github repos
-" Bundle 'https://github.com/wincent/Command-T'
-Bundle 'taglist.vim'
-Bundle 'ctrlp.vim'
-Bundle 'https://github.com/aaronbieber/quicktask'
-" ...
-
-filetype plugin indent on     " required! 
-"
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
 
 " ======================================================================== "
 " Plug-in specific SETTINGS
@@ -136,3 +143,6 @@ highlight SpecialKey guifg=#4a4a59
 " private
 nnoremap ~ A<C-V>	 <ESC>
 let g:svndiff_ignore_whitespace_tail = 1
+
+" for airline
+set laststatus=2
