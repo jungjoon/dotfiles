@@ -133,10 +133,10 @@ let g:ctrlp_custom_ignore = {
 au VimEnter,VimResized * let g:ctrlp_max_height = &lines
 
 " http://vimcasts.org/episodes/show-invisibles/
-nmap <leader>l :set list!<CR>
-set listchars=tab:»\ ,eol:¬
-highlight NonText guifg=#4a4a59
-highlight SpecialKey guifg=#4a4a59
+" nmap <leader>l :set list!<CR>
+" set listchars=tab:»\ ,eol:¬
+" highlight NonText guifg=#4a4a59
+" highlight SpecialKey guifg=#4a4a59
 
 " colo zenburn
 
