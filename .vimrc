@@ -44,6 +44,7 @@ Plugin 'ctrlp.vim'
 Plugin 'https://github.com/aaronbieber/quicktask'
 Plugin 'bling/vim-airline'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'tpope/vim-obsession'
 " ...
 
 call vundle#end()
