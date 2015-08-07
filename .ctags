@@ -1,0 +1,6 @@
+--langdef=arm_inc
+--langmap=arm_inc:.inc
+--regex-arm_inc=/^[ \t]*\.macro[ \t]+([a-zA-Z0-9_]+)/\1/d,definition/
+--langdef=arm_s
+--langmap=arm_s:.s
+--regex-arm_s=/^[ \t]*\.macro[ \t]+([a-zA-Z0-9_]+)/\1/d,definition/
