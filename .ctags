@@ -4,3 +4,4 @@
 --langdef=arm_s
 --langmap=arm_s:.s
 --regex-arm_s=/^[ \t]*\.macro[ \t]+([a-zA-Z0-9_]+)/\1/d,definition/
+--regex-arm_s=/^([a-zA-Z0-9_]+):/\1/d,definition/
