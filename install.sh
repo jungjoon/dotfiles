@@ -12,8 +12,8 @@ do
 done
 
 if [[ ! -d ~/bin ]]; then
-  echo "dir ~/bin not found"
-  exit
+  echo "dir ~/bin not found => ... creating"
+  mkdir ~/bin
 fi
 
 for name in `find bin -type f`
