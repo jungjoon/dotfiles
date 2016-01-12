@@ -33,6 +33,7 @@ Plugin 'jellybeans.vim'
 Plugin 'PapayaWhip'
 Plugin 'Relaxed-Green'
 Plugin 'Zenburn'
+Plugin 'badwolf'
 " Plugin 'all-colors-pack'
 " Plugin 'L9'
 " Plugin 'FuzzyFinder'
@@ -140,7 +141,7 @@ au VimEnter,VimResized * let g:ctrlp_max_height = &lines
 " highlight NonText guifg=#4a4a59
 " highlight SpecialKey guifg=#4a4a59
 
-" colo zenburn
+colo badwolf
 
 " private
 nnoremap ~ A<C-V>	 <ESC>
