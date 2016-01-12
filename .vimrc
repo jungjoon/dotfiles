@@ -5,9 +5,15 @@
 "   Sumarry
 "     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "     vim -c BundleInstall
+
+syntax on
 set nocompatible               " be iMproved
 filetype off                   " required!
 set rtp+=~/.vim/bundle/Vundle.vim
+
+if has("nvim")
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif 
 
 call vundle#begin()
 
@@ -34,6 +40,7 @@ Plugin 'PapayaWhip'
 Plugin 'Relaxed-Green'
 Plugin 'Zenburn'
 Plugin 'badwolf'
+Plugin 'morhetz/gruvbox'
 " Plugin 'all-colors-pack'
 " Plugin 'L9'
 " Plugin 'FuzzyFinder'
@@ -149,3 +156,4 @@ let g:svndiff_ignore_whitespace_tail = 1
 
 " for airline
 set laststatus=2
+
