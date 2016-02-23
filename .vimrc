@@ -10,6 +10,7 @@ syntax on
 set nocompatible               " be iMproved
 filetype off                   " required!
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.fzf
 
 if has("nvim")
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
