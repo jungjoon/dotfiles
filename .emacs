@@ -14,6 +14,8 @@
 (global-set-key "\C-c\C-k" 'kill-region)
 
 (global-set-key (kbd "C-'") 'switch-to-previous-buffer)
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
 
 ; disable UI
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
