@@ -81,7 +81,35 @@
 
 (global-set-key (kbd "C-c g") 'run-google)
 
-;; http://emacsredux.com/blog/2013/03/29/terminal-at-your-fingertips/
+(defun visit-term-buffer ()
+  "Create or visit a terminal buffer."
+  (interactive)
+  (if (not (get-buffer "*ansi-term*"))
+      (progn
+	(split-window-sensibly (selected-window))
+	(other-window 1)
+	(ansi-term (getenv "SHELL")))
+    (switch-to-buffer-other-window "*ansi-term*")))
+
+(global-set-key (kbd "C-c t") 'visit-term-buffer)
+
+(defun kill-other-buffers () ; TODO study
+  "kill all buffers but the current one"
+  (interactive)
+  (dolist (buffer (buffer-list))
+    (unless (or (eql buffer (current-buffer)) (not (buffer-file-name buffer)))
+      (kill-buffer buffer))))
+;; TODO study second, functional implmentation that uses dash package on emacsredux
+
+(global-set-key (kbd "C-x K") 'kill-other-buffers)
+
+(defun kill-buffer-other-window ()
+  (interactive)
+  (kill-buffer (window-buffer (next-window))))
+;; TODO bind this and make it include close window (like "C-x 1"")
+
+;; MARK go back to previous window
+
 ;; https://www.masteringemacs.org/article/running-shells-in-emacs-overview
 
 ;; http://emacsredux.com/blog/archives/    TODO restart at MAR 29 Terminal...
