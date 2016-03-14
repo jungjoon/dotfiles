@@ -126,6 +126,8 @@
 
 ;; MARK playing with font sizes 
 
+(global-hl-line-mode +1)
+
 ;; https://www.masteringemacs.org/article/running-shells-in-emacs-overview
 
 ;; http://emacsredux.com/blog/archives/    TODO restart at MAR 29 Terminal...
