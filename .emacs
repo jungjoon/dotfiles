@@ -99,7 +99,7 @@
   (dolist (buffer (buffer-list))
     (unless (or (eql buffer (current-buffer)) (not (buffer-file-name buffer)))
       (kill-buffer buffer))))
-;; TODO study second, functional implmentation that uses dash package on emacsredux
+;; TODO study second in ER, functional implmentation that uses dash package on emacsredux
 
 (global-set-key (kbd "C-x K") 'kill-other-buffers)
 
@@ -108,7 +108,23 @@
   (kill-buffer (window-buffer (next-window))))
 ;; TODO bind this and make it include close window (like "C-x 1"")
 
-;; MARK go back to previous window
+(global-set-key (kbd "C-o") 'other-window)
+(global-set-key (kbd "C-S-o") (lambda ()
+			      (interactive)
+			      (other-window -1)))
+(global-set-key (kbd "C-1") 'delete-other-windows)
+
+;; (global-set-key (kbd "C-x O") (lambda ()
+;;				(interactive)
+;;				(other-window -1)))
+
+;; TODO consider below via C-S-b/f/p/n
+(global-set-key (kbd "C-c b") 'windmove-left)
+(global-set-key (kbd "C-c f") 'windmove-right)
+(global-set-key (kbd "C-c p") 'windmove-up)
+(global-set-key (kbd "C-c n") 'windmove-down)
+
+;; MARK playing with font sizes 
 
 ;; https://www.masteringemacs.org/article/running-shells-in-emacs-overview
 
