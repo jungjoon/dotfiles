@@ -124,9 +124,16 @@
 (global-set-key (kbd "C-c p") 'windmove-up)
 (global-set-key (kbd "C-c n") 'windmove-down)
 
-;; MARK playing with font sizes 
+;;  playing with font sizes
+;; TODO adjust font size in all frame github.com/purcell/emacs.d/init-fonts.el
 
 (global-hl-line-mode +1)
+
+;; TODO does this conflict with electric-pair-mode?
+;; (require 'paren)
+;; (setq show-paren-style 'parenthesis)
+;; (show-paren-mode +1)
+
 
 ;; https://www.masteringemacs.org/article/running-shells-in-emacs-overview
 
@@ -145,9 +152,9 @@
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
 
-(global-set-key (kbd "C-'") 'switch-to-previous-buffer)
-(global-set-key (kbd "C-=") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "C-<tab>") 'switch-to-previous-buffer)
+;; (global-set-key (kbd "C-=") 'text-scale-increase)
+;; (global-set-key (kbd "C--") 'text-scale-decrease)
 
 (global-set-key [(shift return)] 'smart-open-line)
 
