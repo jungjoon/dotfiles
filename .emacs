@@ -134,6 +134,52 @@
 ;; (setq show-paren-style 'parenthesis)
 ;; (show-paren-mode +1)
 
+(defun move-line-up ()
+  "move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(global-set-key [(control shift up)] 'move-line-up)
+(global-set-key [(control shift down)] 'move-line-down)
+
+(defun delete-file-and-buffer ()
+  "kill the current buffer and deletes the file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (when filename
+      (if (vc-backend filename)
+	  (vc-delete-file filename)
+	(progn
+	  (delete-file filename)
+	  (message "deleted file %s" filename)
+	  (kill-buffer))))))
+
+(global-set-key (kbd "C-c D") 'delete-file-and-buffer)
+
+(require 'recentf)
+(setq recentf-max-saved-items 200
+      recentf-max-menu-items 15)
+(recentf-mode +1)
+
+(defun recentf-ido-find-file ()
+  "Find a recent file using ido."
+  (interactive)
+  (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
+    (when file
+      (find-file file))))
+
+(global-set-key (kbd "C-c f") 'recentf-ido-find-file)
+
 
 ;; https://www.masteringemacs.org/article/running-shells-in-emacs-overview
 
@@ -141,6 +187,7 @@
   
 
 ;; TODO read-shell-command vs read-string				     
+
 
 
 ;; from stevey's 10 ways to improve ...
