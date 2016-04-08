@@ -21,6 +21,7 @@
     (shell-command (concat
 		    (cond
 		     ((and (not arg) (eq system-type 'windows-nt)) "start")
+		     ((and (not arg) (eq system-type 'cygwin)) "cygstart")
 		     ((and (not arg) (eq system-type '(gnu gnu/linux))) "xdg-open")
 		     (t (read-shell-command "Open current file with: "))) ; TODO check evaluation order
 		    " "
@@ -28,6 +29,41 @@
 
 (global-set-key (kbd "C-c o") 'prelude-open-with)
 
+(defun open-buffer-dir ()
+  "run explorer on the directory of the current buffer"
+  (interactive)
+  (when buffer-file-name
+    (shell-command (concat "explorer /select," (file-name-nondirectory (buffer-file-name))))))
+
+(global-set-key (kbd "C-c d") 'open-buffer-dir)
+
+(require 'thingatpt)
+(require 'browse-url)
+
+(defun lunch-by-go ()
+  (interactive)
+  (let ((needle (if (use-region-p)
+		    (format "%s" (buffer-substring-no-properties (region-beginning) (region-end)))
+		  (or (thing-at-point 'url)
+		      (thing-at-point 'symbol)
+		      (thing-at-point 'word)))))
+    (shell-command (format "go \"%s\"" needle))
+    (message needle)))
+
+(global-set-key (kbd "C-c q") 'lunch-by-go)
+
+(defun logsoup ()
+  "colorizing log file"
+  (interactive)
+  (if (equal major-mode 'dired-mode)
+      (progn
+	(shell-command (concat "logsoup " (dired-file-name-at-point)))
+        (switch-to-buffer-other-window "*Shell Command Output*")
+	(display-ansi-colors))
+    (message "not dired-mode")))
+
+(global-set-key (kbd "C-c l") 'logsoup)
+		     
 (defun copy-file-name-to-clipboard ()
   "copy the current buffer filename to clipboard"
   (interactive)
@@ -226,10 +262,15 @@
 	     '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
-(load-theme 'solarized-dark t)
-
 ;; key-chord
 (require 'key-chord)
 (key-chord-mode 1)
 
 ;; (key-chord-define-global "oo" 'switch-to-previous-buffer)
+
+(require 'ansi-color)
+(defun display-ansi-colors ()
+  (interactive)
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
+(load-theme 'solarized-dark t)
