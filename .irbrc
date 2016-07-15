@@ -38,8 +38,23 @@ module ByteCalc
         self / 1.gb.to_f
     end
 
+    def b_print_set_bit
+        ret = ""
+        t = self
+        bit = 0
+        while t != 0 do
+            if (t & 1) == 1 then
+                ret += "bit #{bit}\n"
+            end
+            t = (t >> 1)
+            bit += 1
+        end
+
+        ret
+    end
+
     def inspect
-        "#{d} / #{x} / #{b}"
+        "#{d} / #{x} / #{b}" + "\n" + (b_print_set_bit)
     end
 end
 

@@ -2,6 +2,8 @@
 # alias python=python3.4
 alias s=sync
 alias tm=tmux
+alias dpush="pwd > ~/tmp_dpushpop"
+alias dpop="cd \`cat ~/tmp_dpushpop\`"
 
 export TERM=xterm-256color
 
