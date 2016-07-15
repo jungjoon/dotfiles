@@ -1,0 +1,8 @@
+#!/bin/sh
+echo "!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;\" to lines/" > ~/.vim/jumptags
+echo "!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/"                 >> ~/.vim/jumptags
+echo "!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/"   >> ~/.vim/jumptags
+echo "!_TAG_PROGRAM_NAME	Exuberant Ctags	//"                                 >> ~/.vim/jumptags
+echo "!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/"        >> ~/.vim/jumptags
+echo "!_TAG_PROGRAM_VERSION	5.9~svn20110310	//"                                 >> ~/.vim/jumptags
+echo "___virttag___	$1	/___virttag___/;\"	d"                                  >> ~/.vim/jumptags
