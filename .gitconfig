@@ -1,15 +1,26 @@
 [color]
 	ui = auto
-[user]
-	name = Jung-joon Kim
-	email = jungjoon@gmail.com
 [alias]
     st = status
     co = checkout
     br = branch
     df = diff
     gl = log --graph --date-order -C -M --pretty=format:\"<%h>%x09%ad%x09%an:%x09%Cgreen%s%Creset%Cred%d%Creset\" --date=relative
+    gln = log --date-order -C -M --pretty=format:\"commit %H %ad %d\" --date=relative
+    glna = log --graph --all --date-order -C -M --pretty=format:\"commit %H %ad %d\" --date=relative
     gla = !git log --graph --date-order -C -M --pretty=format:\"<%h>%x09%ad%x09%an:%x09%s%Cgreen%d%Creset\" --date=relative --all | egrep --color 'HEAD|'
+	p4 = !git-p4
+
+[diff]
+      tool = default-difftool
+[difftool "default-difftool"]
+      cmd = vim -f '+next' '+execute \"DirDiff\" argv(0) argv(1)' $LOCAL $REMOTE '+syntax off'
 
 [push]
 	default = current
+
+[core]
+    editor = vi
+
+[include]
+	path = .gitconfig_local

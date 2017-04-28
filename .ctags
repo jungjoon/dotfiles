@@ -5,3 +5,6 @@
 --langmap=arm_s:.s
 --regex-arm_s=/^[ \t]*\.macro[ \t]+([a-zA-Z0-9_]+)/\1/d,definition/
 --regex-arm_s=/^([a-zA-Z0-9_]+):/\1/d,definition/
+# --langdef=tgt_build
+# --langmap=tgt_build:.builds
+# --regex-tgt_build=/^define ([a-zA-Z0-9_]+)[ \t]+/\1/d,definition/

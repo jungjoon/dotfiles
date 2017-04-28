@@ -34,6 +34,7 @@ Plugin 'jellybeans.vim'
 Plugin 'PapayaWhip'
 Plugin 'Relaxed-Green'
 Plugin 'Zenburn'
+Plugin 'lifepillar/vim-solarized8'
 " Plugin 'all-colors-pack'
 " Plugin 'L9'
 " Plugin 'FuzzyFinder'
@@ -48,6 +49,8 @@ Plugin 'tpope/vim-obsession'
 Plugin 'mgedmin/chelper.vim'
 
 Plugin 'wesleyche/SrcExpl'  
+
+Plugin 'will133/vim-dirdiff'
 
 " Plugin 'xiaoshuan/showmarks.vim'
 Plugin 'taglist.vim'
@@ -104,12 +107,12 @@ set hlsearch
 set ruler
 set ts=4 sts=4 sw=4 expandtab
 set incsearch
-" set mouse=a
+set mouse=
 
 autocmd CursorMoved * silent! exe printf('match IncSearch /\<%s\>/', expand('<cword>'))
 
-"set cursorcolumn
-set cursorline
+" set cursorcolumn
+" set cursorline
 
 " let mapleader = "_"
 
@@ -124,10 +127,11 @@ set cursorline
 " autocmd BufReadPost quickfix set modifiable
 noremap <C-p> :cp<CR>
 noremap <C-n> :cn<CR>
-" noremap <C-h> :cr<CR>
 " noremap <C-l> :cla<CR>
+" noremap <C-h> :cr<CR>
 inoremap <C-g> <ESC>
 nnoremap <C-g> :ccl<CR>
+nnoremap <leader>q :qa!<CR>
 
 let g:newgrp="grp"
 function! NewGrep(args)
@@ -181,8 +185,8 @@ set list
 " set listchars=tab:»\ ,eol:¬
 "set listchars=tab:>-,eol:$
 set listchars=tab:>-
-highlight NonText guifg=#9900ff
-highlight SpecialKey guifg=#9900ff
+highlight NonText guifg=#974652
+highlight SpecialKey guifg=#974652
 
 " colo zenburn
 
@@ -227,3 +231,19 @@ endfunction
 vnoremap <silent> y y:call YankHook()<cr>
 nnoremap <silent> yy yy:call YankHook()<cr>
 
+function! PushHere()
+    execute "silent !tagpush %:p"
+    execute "normal! i___virttag___\<esc>hhhhhhhhhhhh:tag ___virttag___\<CR>u"
+    exec "redraw!"
+endfunction
+
+nnoremap <silent> mm mm:call PushHere()<cr>
+
+colorscheme solarized8_dark_low
+
+" for truecolor support
+" let &t_8f="\e[38;2;%ld;%ld;%ldm"
+" let &t_8b="\e[48;2;%ld;%ld;%ldm"
+set termguicolors
+
+syntax on
