@@ -32,8 +32,3 @@ echo ""
 echo "if [ -f ~/.bashrc_local ]; then"
 echo "   source ~/.bashrc_local"
 echo "fi"
-echo ""
-echo "if [ -f ~/.gitconfig_local ]; then"
-echo "   source ~/.gitconfig_local"
-echo "fi"
-
