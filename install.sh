@@ -26,3 +26,14 @@ do
     echo "$file is not a file or a symlink"
   fi
 done
+
+echo "Add belows lines into .bashrc"
+echo ""
+echo "if [ -f ~/.bashrc_local ]; then"
+echo "   source ~/.bashrc_local"
+echo "fi"
+echo ""
+echo "if [ -f ~/.gitconfig_local ]; then"
+echo "   source ~/.gitconfig_local"
+echo "fi"
+
