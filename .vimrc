@@ -34,6 +34,7 @@ Plugin 'jellybeans.vim'
 Plugin 'PapayaWhip'
 Plugin 'Relaxed-Green'
 Plugin 'Zenburn'
+Plugin 'TagHighlight'
 Plugin 'lifepillar/vim-solarized8'
 " Plugin 'all-colors-pack'
 " Plugin 'L9'
@@ -53,9 +54,9 @@ Plugin 'wesleyche/SrcExpl'
 Plugin 'will133/vim-dirdiff'
 
 " Plugin 'xiaoshuan/showmarks.vim'
-Plugin 'taglist.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'wesleyche/Trinity.git'
+" Plugin 'taglist.vim'
+" Plugin 'scrooloose/nerdtree'
+" Plugin 'wesleyche/Trinity.git'
 
 " Plugin 'cscope.git'
 " Plugin 'cscope_macros.vim'
@@ -101,6 +102,8 @@ set tags+=./../../../../../../../../../../../../tags
 set tags+=./../../../../../../../../../../../../../tags
 set tags+=./../../../../../../../../../../../../../../tags
 set tags+=./../../../../../../../../../../../../../../../tags
+set tags+=./../../../../../../../../../../../../../../../../tags
+set tags+=./../../../../../../../../../../../../../../../../../tags
 
 set nocompatible               " be iMproved
 set hlsearch
@@ -130,25 +133,34 @@ noremap <C-n> :cn<CR>
 " noremap <C-l> :cla<CR>
 " noremap <C-h> :cr<CR>
 inoremap <C-g> <ESC>
-nnoremap <C-g> :ccl<CR>
+vnoremap <C-g> <ESC>
+nnoremap <C-g> :ccl<CR>     " close quickfix
 nnoremap <leader>q :qa!<CR>
 
-let g:newgrp="grp"
-function! NewGrep(args)
+" for C-] to use tjump instead of tag
+nnoremap <c-]> g<c-]>
+vnoremap <c-]> g<c-]>
+nnoremap g<c-]> <c-]>
+vnoremap g<c-]> <c-]>
+
+if executable('ag') == 0
+    error, sorry, I need ag
+end
+
+function! RunAg(args)
+    call PushHere()
     let grepprg_bak=&grepprg
-    exec "set grepprg=" . g:newgrp
-    execute "silent! grep " . a:args
-    botright copen
+    set grepprg=ag\ --nogroup\ --nocolor
+    execute "silent! grep! " . a:args
+    botright copen 15
     let &grepprg=grepprg_bak
-    exec "redraw!"
+    redraw!
 endfunction
-command! -nargs=* -complete=file NewGrep call NewGrep(<q-args>)
+
+command! -nargs=* -complete=file RunAg call RunAg(<q-args>)
 " grep for current word
-noremap <C-a> :NewGrep <C-r><C-w><CR>
-
-noremap <leader>r :w<CR>:!%:p<CR>
-
-
+nnoremap <leader>g :RunAg <C-r><C-w> -w
+nnoremap <c-_> :RunAg <C-r><C-w> -w
 
 " ======================================================================== "
 " Plug-in specific SETTINGS
@@ -160,17 +172,17 @@ noremap <leader>r :w<CR>:!%:p<CR>
 " noremap <C-i> :call Svndiff("clear")<CR>
 " let g:svndiff_autoupdate = 1
 " let g:svndiff_one_sign_delete = 1
+" let g:svndiff_ignore_whitespace_tail = 1
 " hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green'
 " hi DiffDelete   ctermfg=0 ctermbg=1 guibg='red'
 " hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow'
 
 " for clang-components
-let g:clang_complete_auto = 0
-let g:clang_complete_copen = 1
+" let g:clang_complete_auto = 0
+" let g:clang_complete_copen = 1
 
 " ctrl-p
 let g:ctrlp_map = '\t'
-" let g:ctrlp_user_command = 'find %s -type f'
 
 let g:ctrlp_custom_ignore = {
       \ 'dir': '\.git$\|\.hg$\|\.svn$\|__pycache__$' . $CTRLP_IGNORE_DIR_OPTIONS,
@@ -178,6 +190,12 @@ let g:ctrlp_custom_ignore = {
       \ }
 
 au VimEnter,VimResized * let g:ctrlp_max_height = &lines
+
+" Use ag in CtrlP for listing files. ag is enough fast to disable cache
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:ctrlp_use_caching = 0
+
+" let g:ctrlp_user_command = 'find %s -type f'
 
 " http://vimcasts.org/episodes/show-invisibles/
 nmap <leader>l :set list!<CR>
@@ -190,50 +208,36 @@ highlight SpecialKey guifg=#974652
 
 " colo zenburn
 
-" private
-nnoremap ~ A<C-V>	 <ESC>
-let g:svndiff_ignore_whitespace_tail = 1
+" private, inserting TAB to end
+" nnoremap ~ A<C-V>	 <ESC>
 
 " for airline
 set laststatus=2
 
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
 " bind K to grep word under cursor
-nnoremap L :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-nnoremap K :vsp<CR><C-W>l:grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-nnoremap <F1> A<C-v>u<TAB><ESC>j
-nnoremap <F2> A<C-v>u<TAB><C-v>u<TAB><ESC>j
-nnoremap <F3> A<C-v>u<TAB> <C-v>u<TAB><ESC>j
+" nnoremap L :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" nnoremap K :vsp<CR><C-W>l:grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" nnoremap <F1> A<C-v>u<TAB><ESC>j
+" nnoremap <F2> A<C-v>u<TAB><C-v>u<TAB><ESC>j
+" nnoremap <F3> A<C-v>u<TAB> <C-v>u<TAB><ESC>j
 
-" for going to beginning of functiion whose starting brace is not on first
-" column
+" for going to beginning of functiion whose starting brace is not on first column
 map [[ ?{<CR>w99[{
 map ][ /}<CR>b99]}
 map ]] j0[[%/{<CR>
 map [] k$][%?}<CR>
 
-function! YankHook()
-    call system("go", @0 . "\n")
-    redraw!
-endfunction
-
-vnoremap <silent> y y:call YankHook()<cr>
-nnoremap <silent> yy yy:call YankHook()<cr>
+" function! YankHook()
+"    call system("go", @0 . "\n")
+"    redraw!
+"endfunction
+"
+"vnoremap <silent> y y:call YankHook()<cr>
+"nnoremap <silent> yy yy:call YankHook()<cr>
 
 function! PushHere()
-    execute "silent !tagpush %:p"
-    execute "normal! i___virttag___\<esc>hhhhhhhhhhhh:tag ___virttag___\<CR>u"
+    execute "silent !tagpush %:p " . line(".") . " " . col(".")
+    tag ___virttag___
     exec "redraw!"
 endfunction
 
@@ -246,4 +250,12 @@ set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
+" disable background-color-erase (tmux issue that doesn't color bg after EOL)
+set t_ut=
+
 syntax on
+
+
+
+
+" TODO editable quickfix. it looks done but actually doesn't work properly

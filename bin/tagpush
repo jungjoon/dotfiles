@@ -5,4 +5,5 @@ echo "!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/"   >>
 echo "!_TAG_PROGRAM_NAME	Exuberant Ctags	//"                                 >> ~/.vim/jumptags
 echo "!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/"        >> ~/.vim/jumptags
 echo "!_TAG_PROGRAM_VERSION	5.9~svn20110310	//"                                 >> ~/.vim/jumptags
-echo "___virttag___	$1	/___virttag___/;\"	d"                                  >> ~/.vim/jumptags
+# echo "___virttag___	$1	/___virttag___/;\"	d"                                  >> ~/.vim/jumptags
+echo "___virttag___	$1	/\\%$2l\\%$3c/;\"	d"                                  >> ~/.vim/jumptags
