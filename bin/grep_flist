@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import re
+
+try:
+  flistfn = os.environ['FLIST']
+except KeyError:
+  flistfn = 'flist'
+
+try:
+  flistf = open(flistfn)
+  files_in_flist = map(lambda x: re.sub("^./", "", x.strip()), flistf.readlines())
+  dic_filename_to_ignore = {}
+  for x in files_in_flist:
+    dic_filename_to_ignore[x] = 1
+except Exception:
+  sys.stderr.write("FLIST file not found : " + flistfn + "\n")
+  sys.exit(1)
+
+# print files_in_flist[0]
+
+for ln in sys.stdin.readlines():
+  splitln = re.sub("^./", "", ln.strip()).split(':')
+  if len(splitln) > 1:
+    fn = splitln[0]
+    if dic_filename_to_ignore.has_key(fn):
+      print ln.strip()

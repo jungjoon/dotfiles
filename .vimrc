@@ -83,6 +83,7 @@ filetype plugin indent on     " required!
 " ======================================================================== "
 " BASIC SETTINGS
 " ======================================================================== "
+" TODO use environment variable (TAG) to store name of tag file. so that we can work with different arch (with each tag for each arch)
 set tags=tags
 set tags+=~/.vim/jumptags
 set tags+=./tags
@@ -137,16 +138,17 @@ vnoremap <C-g> <ESC>
 nnoremap <C-g> :ccl<CR>     " close quickfix
 nnoremap <leader>q :qa!<CR>
 
-" for C-] to use tjump instead of tag
+" for C-] to use tjump (that asks if there's multiple defs) instead of tag
 nnoremap <c-]> g<c-]>
 vnoremap <c-]> g<c-]>
 nnoremap g<c-]> <c-]>
 vnoremap g<c-]> <c-]>
 
 if executable('ag') == 0
-    error, sorry, I need ag
+    error, sorry, I *do* need ag.
 end
 
+" TODO refactoring - to merge RunAg and RunAgFlist (adding filter arg into RunAg)
 function! RunAg(args)
     call PushHere()
     let grepprg_bak=&grepprg
@@ -157,10 +159,21 @@ function! RunAg(args)
     redraw!
 endfunction
 
+function! RunAgFlist(args)
+    call PushHere()
+    let grepprg_bak=&grepprg
+    set grepprg=ag\ --nogroup\ --nocolor\ $*\ \\\|\ grep_flist
+    execute "silent! grep! " . a:args
+    botright copen 15
+    let &grepprg=grepprg_bak
+    redraw!
+endfunction
+
 command! -nargs=* -complete=file RunAg call RunAg(<q-args>)
-" grep for current word
 nnoremap <leader>g :RunAg <C-r><C-w> -w
-nnoremap <c-_> :RunAg <C-r><C-w> -w
+
+command! -nargs=* -complete=file RunAgFlist call RunAgFlist(<q-args>)
+nnoremap <c-_> :RunAgFlist <C-r><C-w> -w
 
 " ======================================================================== "
 " Plug-in specific SETTINGS
@@ -256,6 +269,5 @@ set t_ut=
 syntax on
 
 
+" TODO editable quickfix. it looks done but actually doesn't work properly, especially, I'd like to add entries... merging searching results
 
-
-" TODO editable quickfix. it looks done but actually doesn't work properly
