@@ -6,7 +6,25 @@
 "     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "     vim -c BundleInstall
 set nocompatible               " be iMproved
-filetype off                   " required!
+filetype on                   " required!
+syntax on
+
+" allow to use more memory
+set hidden
+set history=100
+
+set ts=4 sts=4 sw=4 expandtab
+set nowrap
+set hlsearch
+set incsearch
+set mouse=
+
+set showmatch
+set showcmd
+
+" set ignorecase
+
+
 set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=~/.fzf
 
@@ -24,7 +42,7 @@ Plugin 'tpope/vim-fugitive'
 " vim-scripts repos
 Plugin 'vcscommand.vim'
 " Plugin 'svndiff'
-Plugin 'clang-complete'
+" Plugin 'clang-complete'
 
 Plugin 'darkslategray.vim'
 Plugin 'matrix.vim'
@@ -36,6 +54,7 @@ Plugin 'Relaxed-Green'
 Plugin 'Zenburn'
 Plugin 'TagHighlight'
 Plugin 'lifepillar/vim-solarized8'
+" Plugin 'ervandew/supertab'
 " Plugin 'all-colors-pack'
 " Plugin 'L9'
 " Plugin 'FuzzyFinder'
@@ -45,6 +64,7 @@ Plugin 'lifepillar/vim-solarized8'
 Plugin 'ctrlp.vim'
 Plugin 'https://github.com/aaronbieber/quicktask'
 Plugin 'bling/vim-airline'
+Plugin 'majutsushi/tagbar'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tpope/vim-obsession'
 Plugin 'mgedmin/chelper.vim'
@@ -65,6 +85,8 @@ Plugin 'ronakg/quickr-cscope.vim'
 " ...
 
 Plugin 'stefandtw/quickfix-reflector.vim'
+" Plugin 'dhruvasagar/vim-markify'
+Plugin 'MattesGroeger/vim-bookmarks'
 
 call vundle#end()
 filetype plugin indent on     " required! 
@@ -106,13 +128,6 @@ set tags+=./../../../../../../../../../../../../../../../tags
 set tags+=./../../../../../../../../../../../../../../../../tags
 set tags+=./../../../../../../../../../../../../../../../../../tags
 
-set nocompatible               " be iMproved
-set hlsearch
-set ruler
-set ts=4 sts=4 sw=4 expandtab
-set incsearch
-set mouse=
-
 autocmd CursorMoved * silent! exe printf('match IncSearch /\<%s\>/', expand('<cword>'))
 
 " set cursorcolumn
@@ -135,14 +150,19 @@ noremap <C-n> :cn<CR>
 " noremap <C-h> :cr<CR>
 inoremap <C-g> <ESC>
 vnoremap <C-g> <ESC>
-nnoremap <C-g> :ccl<CR>     " close quickfix
+" close quickfix
+nnoremap <silent> <C-g> :ccl<CR>:nohlsearch<CR>
 nnoremap <leader>q :qa!<CR>
+nnoremap <C-q> :qa!<CR>     " TODO why this doesn't work
 
 " for C-] to use tjump (that asks if there's multiple defs) instead of tag
 nnoremap <c-]> g<c-]>
 vnoremap <c-]> g<c-]>
 nnoremap g<c-]> <c-]>
 vnoremap g<c-]> <c-]>
+
+" for 'edit previous file'
+nnoremap <leader><leader> :e#<cr>
 
 if executable('ag') == 0
     error, sorry, I *do* need ag.
@@ -211,8 +231,9 @@ let g:ctrlp_use_caching = 0
 " let g:ctrlp_user_command = 'find %s -type f'
 
 " http://vimcasts.org/episodes/show-invisibles/
-nmap <leader>l :set list!<CR>
+nmap <leader>l :set list!<CR>:set number!<CR>
 set list
+set number
 " set listchars=tab:»\ ,eol:¬
 "set listchars=tab:>-,eol:$
 set listchars=tab:>-
@@ -226,6 +247,7 @@ highlight SpecialKey guifg=#974652
 
 " for airline
 set laststatus=2
+let g:airline#extensions#tagbar#enabled = 1
 
 " bind K to grep word under cursor
 " nnoremap L :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -266,7 +288,7 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 " disable background-color-erase (tmux issue that doesn't color bg after EOL)
 set t_ut=
 
-syntax on
+map <leader>r :source ~/.vimrc<cr>
 
 
 " TODO editable quickfix. it looks done but actually doesn't work properly, especially, I'd like to add entries... merging searching results

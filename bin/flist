@@ -27,3 +27,4 @@ for ln in sys.stdin.readlines():
     fn = splitln[0]
     if dic_filename_to_ignore.has_key(fn):
       print ln.strip()
+      sys.stdout.flush()

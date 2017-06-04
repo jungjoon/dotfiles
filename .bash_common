@@ -45,6 +45,7 @@ alias dpop="cd \`cat ~/tmp_dpushpop\`"
 alias nogitprompt="export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]\[\033[00m\]\$ '"
 alias monitor_file="inotifywait -m -r -e close -e move --format '%:e %w%f' . | grep -v \":ISDIR \""
 alias wttr="curl wttr.in | lolcat"
+alias inotify="inotifywait -m -r --format '%:e %w%f' ."
 
 export TERM=xterm-256color
 
