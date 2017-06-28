@@ -22,6 +22,9 @@ set mouse=
 set showmatch
 set showcmd
 
+set noeol
+set nofixeol
+
 " set ignorecase
 
 
@@ -73,7 +76,6 @@ Plugin 'wesleyche/SrcExpl'
 
 Plugin 'will133/vim-dirdiff'
 
-" Plugin 'xiaoshuan/showmarks.vim'
 " Plugin 'taglist.vim'
 " Plugin 'scrooloose/nerdtree'
 " Plugin 'wesleyche/Trinity.git'
@@ -85,6 +87,7 @@ Plugin 'ronakg/quickr-cscope.vim'
 " ...
 
 Plugin 'stefandtw/quickfix-reflector.vim'
+" Plugin 'xiaoshuan/showmarks.vim'
 " Plugin 'dhruvasagar/vim-markify'
 Plugin 'MattesGroeger/vim-bookmarks'
 
@@ -182,7 +185,17 @@ endfunction
 function! RunAgFlist(args)
     call PushHere()
     let grepprg_bak=&grepprg
-    set grepprg=ag\ --nogroup\ --nocolor\ $*\ \\\|\ grep_flist
+    set grepprg=ag\ --nogroup\ --nocolor\ $*\ \\\|\ flist
+    execute "silent! grep! " . a:args
+    botright copen 15
+    let &grepprg=grepprg_bak
+    redraw!
+endfunction
+
+function! RunAgFlistV(args)
+    call PushHere()
+    let grepprg_bak=&grepprg
+    set grepprg=ag\ --nogroup\ --nocolor\ $*\ \\\|\ flist\ -v
     execute "silent! grep! " . a:args
     botright copen 15
     let &grepprg=grepprg_bak
@@ -194,6 +207,8 @@ nnoremap <leader>g :RunAg <C-r><C-w> -w
 
 command! -nargs=* -complete=file RunAgFlist call RunAgFlist(<q-args>)
 nnoremap <c-_> :RunAgFlist <C-r><C-w> -w
+
+command! -nargs=* -complete=file RunAgFlistV call RunAgFlistV(<q-args>)
 
 " ======================================================================== "
 " Plug-in specific SETTINGS
@@ -290,6 +305,7 @@ set t_ut=
 
 map <leader>r :source ~/.vimrc<cr>
 
+" nnoremap <Leader>k :set cursorline! cursorcolumn!<CR>
 
 " TODO editable quickfix. it looks done but actually doesn't work properly, especially, I'd like to add entries... merging searching results
 
