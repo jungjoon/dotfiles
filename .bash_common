@@ -38,6 +38,7 @@ parse_git_branch() {
 #  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(parse_git_branch)\$ '
 # fi
 
+alias t=task
 alias s=sync
 alias tm=tmux
 alias dpush="pwd > ~/tmp_dpushpop"
