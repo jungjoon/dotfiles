@@ -28,7 +28,7 @@ except Exception:
 
 for ln in sys.stdin.readlines():
   splitln = re.sub("^./", "", ln.strip()).split(':')
-  if len(splitln) > 1:
+  if len(splitln) >= 1:
     fn = splitln[0]
     if dic_filename_to_ignore.has_key(fn) ^ revert:
       print ln.strip()

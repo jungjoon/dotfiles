@@ -38,6 +38,7 @@ parse_git_branch() {
 #  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(parse_git_branch)\$ '
 # fi
 
+alias fn="find . -name"
 alias t=task
 alias s=sync
 alias tm=tmux
@@ -47,6 +48,7 @@ alias nogitprompt="export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]
 alias monitor_file="inotifywait -m -r -e close -e move --format '%:e %w%f' . | grep -v \":ISDIR \""
 alias wttr="curl wttr.in | lolcat"
 alias inotify="inotifywait -m -r --format '%:e %w%f' ."
+alias watchfclose="inotifywait -m -r -e close -e move --format '%:e %w%f' "
 
 export TERM=xterm-256color
 

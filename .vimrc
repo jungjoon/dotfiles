@@ -40,6 +40,11 @@ Plugin 'gmarik/Vundle.vim'
 "
 " original repos on github
 Plugin 'tpope/vim-fugitive'
+" Plugin 'vim-orgmode'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+"    let g:vim_markdown_new_list_item_indent = 2
+
 " Plugin 'Lokaltog/vim-easymotion'
 " Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " vim-scripts repos
@@ -163,6 +168,9 @@ nnoremap <c-]> g<c-]>
 vnoremap <c-]> g<c-]>
 nnoremap g<c-]> <c-]>
 vnoremap g<c-]> <c-]>
+
+inoremap <TAB> <c-t>
+inoremap <S-TAB> <c-d>
 
 " for 'edit previous file'
 nnoremap <leader><leader> :e#<cr>
