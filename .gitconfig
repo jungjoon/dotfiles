@@ -24,3 +24,6 @@
 
 [include]
 	path = .gitconfig_priv
+[user]
+	name = jungjoon
+	email = jungjoon@gmail.com
