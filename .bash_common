@@ -39,6 +39,7 @@ parse_git_branch() {
 # fi
 
 alias fn="find . -name"
+alias fni="find . -iname"
 alias t=task
 alias s=sync
 alias tm=tmux

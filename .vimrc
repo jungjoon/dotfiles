@@ -254,7 +254,7 @@ let g:ctrlp_use_caching = 0
 " let g:ctrlp_user_command = 'find %s -type f'
 
 " http://vimcasts.org/episodes/show-invisibles/
-nmap <leader>l :set list!<CR>:set number!<CR>
+nmap <leader>l :set list!<CR>:set number!<CR>:set wrap!<CR>
 set list
 set number
 " set listchars=tab:»\ ,eol:¬
