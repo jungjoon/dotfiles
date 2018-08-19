@@ -286,12 +286,12 @@ map ]] j0[[%/{<CR>
 map [] k$][%?}<CR>
 
 " function! YankHook()
-"    call system("go", @0 . "\n")
-"    redraw!
-"endfunction
-"
-"vnoremap <silent> y y:call YankHook()<cr>
-"nnoremap <silent> yy yy:call YankHook()<cr>
+" f    call system("go", @0)
+" f    redraw!
+" fendfunction
+" f
+" fvnoremap <silent> y y:call YankHook()<cr>
+" fnnoremap <silent> yy yy:call YankHook()<cr>
 
 function! PushHere()
     execute "silent !tagpush %:p " . line(".") . " " . col(".")
