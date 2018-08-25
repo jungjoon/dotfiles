@@ -136,7 +136,7 @@ set tags+=./../../../../../../../../../../../../../../../tags
 set tags+=./../../../../../../../../../../../../../../../../tags
 set tags+=./../../../../../../../../../../../../../../../../../tags
 
-autocmd CursorMoved * silent! exe printf('match IncSearch /\<%s\>/', expand('<cword>'))
+"autocmd CursorMoved * silent! exe printf('match IncSearch /\<%s\>/', expand('<cword>'))
 
 " set cursorcolumn
 " set cursorline
@@ -260,8 +260,8 @@ set number
 " set listchars=tab:»\ ,eol:¬
 "set listchars=tab:>-,eol:$
 set listchars=tab:>-
-highlight NonText guifg=#974652
-highlight SpecialKey guifg=#974652
+"highlight NonText guifg=#974652
+"highlight SpecialKey guifg=#974652
 
 " colo zenburn
 
