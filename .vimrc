@@ -61,7 +61,7 @@ Plugin 'PapayaWhip'
 Plugin 'Relaxed-Green'
 Plugin 'Zenburn'
 Plugin 'TagHighlight'
-Plugin 'lifepillar/vim-solarized8'
+" Plugin 'lifepillar/vim-solarized8'
 " Plugin 'ervandew/supertab'
 " Plugin 'all-colors-pack'
 " Plugin 'L9'
@@ -301,7 +301,7 @@ endfunction
 
 nnoremap <silent> mm mm:call PushHere()<cr>
 
-colorscheme solarized8_dark_low
+" colorscheme solarized8_dark_low
 
 " for truecolor support
 set termguicolors
@@ -317,3 +317,4 @@ map <leader>r :source ~/.vimrc<cr>
 
 " TODO editable quickfix. it looks done but actually doesn't work properly, especially, I'd like to add entries... merging searching results
 
+syntax off
