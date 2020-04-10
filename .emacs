@@ -22,7 +22,6 @@
   (move-end-of-line nil)
   (newline-and-indent))
 
-
 (defun prelude-open-with (arg)
   "open visited file in default external program"
   "with prefix ARG always prompt for command to use"
@@ -164,10 +163,51 @@
 (global-set-key (kbd "C-c p") 'windmove-up)
 (global-set-key (kbd "C-c n") 'windmove-down)
 
+(defun visit-term-buffer-numbered (num)
+  "Create or visit a terminal buffer - with num option."
+  (interactive)
+  (let ((title (format "*term-%d*" num)))
+    (if (not (get-buffer title))
+      (progn
+	(ansi-term (getenv "SHELL"))
+	;; (vterm)
+	(rename-buffer title))
+    (switch-to-buffer title))))
+
+;; terminal switching
+(eval-after-load "term"
+  '(progn
+(define-key term-raw-map (kbd "M-1") 'nil)
+(define-key term-raw-map (kbd "M-2") 'nil)
+(define-key term-raw-map (kbd "M-3") 'nil)
+(define-key term-raw-map (kbd "M-4") 'nil)
+(define-key term-raw-map (kbd "M-5") 'nil)
+(define-key term-raw-map (kbd "M-6") 'nil)
+(define-key term-raw-map (kbd "M-7") 'nil)
+(define-key term-raw-map (kbd "M-8") 'nil)
+(define-key term-raw-map (kbd "M-9") 'nil)
+(define-key term-raw-map (kbd "M-0") 'nil)
+(define-key term-raw-map (kbd "C-o") 'nil)
+))
+
+(global-set-key (kbd "M-1") (lambda () (interactive)(visit-term-buffer-numbered 1)))
+(global-set-key (kbd "M-2") (lambda () (interactive)(visit-term-buffer-numbered 2)))
+(global-set-key (kbd "M-3") (lambda () (interactive)(visit-term-buffer-numbered 3)))
+(global-set-key (kbd "M-4") (lambda () (interactive)(visit-term-buffer-numbered 4)))
+(global-set-key (kbd "M-5") (lambda () (interactive)(visit-term-buffer-numbered 5)))
+(global-set-key (kbd "M-6") (lambda () (interactive)(visit-term-buffer-numbered 6)))
+(global-set-key (kbd "M-7") (lambda () (interactive)(visit-term-buffer-numbered 7)))
+(global-set-key (kbd "M-8") (lambda () (interactive)(visit-term-buffer-numbered 8)))
+(global-set-key (kbd "M-9") (lambda () (interactive)(visit-term-buffer-numbered 9)))
+(global-set-key (kbd "M-0") (lambda () (interactive)(visit-term-buffer-numbered 0)))
+
+
+
 ;;  playing with font sizes
 ;; TODO adjust font size in all frame github.com/purcell/emacs.d/init-fonts.el
 
 (global-hl-line-mode +1)
+(global-smartscan-mode t)
 
 ;; TODO does this conflict with electric-pair-mode?
 ;; (require 'paren)
@@ -276,4 +316,17 @@
   (ansi-color-apply-on-region (point-min) (point-max)))
 
 ;(load-theme 'solarized-dark t)
-(load-theme 'zenburn t)
+;(load-theme 'zenburn t)
+(load-theme 'zeno t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (smartscan zeno-theme vterm zenburn-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
