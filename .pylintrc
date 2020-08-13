@@ -1,0 +1,16 @@
+[BASIC]
+good-names=i,j,k,v,id,sb,e,logger,fn
+
+[FORMAT]
+max-line-length=120
+
+[DESIGN]
+max-attributes=40
+max-branches=20
+
+[MESSAGES CONTROL]
+disable =
+    too-many-arguments,
+    unsubscriptable-object,
+    eval-used, 
+    C0326

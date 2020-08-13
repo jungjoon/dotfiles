@@ -7,6 +7,7 @@ ln -sf ${PWD}/.bash_common ~/
 ln -sf ${PWD}/.vimrc ~/
 ln -sf ${PWD}/.ackrc ~/
 ln -sf ${PWD}/.ctags ~/
+ln -sf ${PWD}/.pylintrc ~/
 
 mkdir -p ~/bin
 ln -sf ${PWD}/bin/cnt_ext ~/bin/
