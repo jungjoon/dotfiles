@@ -1,11 +1,18 @@
 " delete all audocmd with default group
 autocmd!
 
+set nocompatible
+filetype off
+
 set hidden
 set history=100
 
 " et ts sts sw
 set expandtab tabstop=4 softtabstop=4 shiftwidth=4
+set autoindent
+
+set encoding=utf-8
+
 set nowrap
 set hlsearch
 set incsearch
@@ -15,6 +22,13 @@ set showcmd
 
 set noeol
 set nofixeol
+
+set splitbelow
+set splitright
+
+set foldmethod=indent
+set foldlevel=99
+nnoremap <space> za
 
 set tags=tags
 set tags+=~/.vim/jumptags
@@ -50,13 +64,26 @@ autocmd TermClose * :q
 
 " :PlugInstall
 call plug#begin("~/.vim/plugged")
-Plug 'Shougo/denite.nvim'
+" Plug 'Shougo/denite.nvim'
 " Plug 'dracula/vim'
 " Plug 'rafi/awesome-vim-colorschemes'
 Plug 'arcticicestudio/nord-vim'
 " Plug 'blueyed/vim-diminactive'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'tpope/vim-commentary'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+Plug 'dense-analysis/ale'
+" Plug 'davidhalter/jedi-vhm'
+Plug 'ycm-core/YouCompleteMe'
+" Plug 'neovim/nvim-lsp'
+" Plug 'tmhedberg/SimpylFold'
+" Plug 'thinca/vim-quickrun'
+Plug 'Yggdroot/indentLine'
 call plug#end()
+
+filetype plugin indent on
 
 " colorscheme dracula
 colorscheme nord
@@ -64,19 +91,206 @@ colorscheme nord
 hi StatusLine   ctermfg=15  guifg=#ffffff ctermbg=239 guibg=#949031 cterm=bold gui=bold
 hi StatusLineNC ctermfg=249 guifg=#b2b2b2 ctermbg=237 guibg=#3a3a3a cterm=none gui=none
 
+" Plugin semshi
+" use semshi for highlight but not for lint/syntax check
+let g:semshi#error_sign = v:false
+
+" Plugin ale
+let g:ale_linters = {
+    \   'python': ['pylint'],
+    \}
+let g:ale_fixers = {
+    \    'python': ['yapf'],
+    \}
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? '✨ all good ✨' : printf(
+                \   '😞 %dW %dE',
+                \   all_non_errors,
+                \   all_errors
+                \)
+endfunction
+
+set statusline=
+set statusline+=%m
+set statusline+=\ %f
+set statusline+=%=
+set statusline+=\ %{LinterStatus()}
+
+
+" " Plug nvim-lsp with pyls_ms
+" packadd nvim-lsp
+" lua << EOF
+" require 'nvim_lsp'.pyls_ms.setup{
+"     filetypes = { "python" }
+"     init_options = {
+"       analysisUpdates = true,
+"       asyncStartup = true,
+"       displayOptions = {},
+"       interpreter = {
+"         properties = {
+"           InterpreterPath = "/usr/local/bin/python3.8",
+"           Version = "3.8"
+"         }
+"       }
+"     }
+"     on_new_config = <function 1>
+"     root_dir = vim's starting directory
+"     settings = {
+"       python = {
+"         analysis = {
+"           disabled = {},
+"           errors = {},
+"           info = {}
+"         }
+"       }
+"     }
+" }
+" EOF
+
+" Plug nvim_lsp with pyls
+" pip3.8 install 'python-language-server[all]'
+
+" register the language server
+" let settings = {
+"           \   "pyls" : {
+"           \     "enable" : v:true,
+"           \     "trace" : { "server" : "verbose", },
+"           \     "commandPath" : "",
+"           \     "configurationSources" : [ "pycodestyle" ],
+"           \     "plugins" : {
+"           \       "jedi_completion" : { "enabled" : v:true, },
+"           \       "jedi_hover" : { "enabled" : v:true, },
+"           \       "jedi_references" : { "enabled" : v:true, },
+"           \       "jedi_signature_help" : { "enabled" : v:true, },
+"           \       "jedi_symbols" : {
+"           \         "enabled" : v:true,
+"           \         "all_scopes" : v:true,
+"           \       },
+"           \       "mccabe" : {
+"           \         "enabled" : v:true,
+"           \         "threshold" : 15,
+"           \       },
+"           \       "preload" : { "enabled" : v:true, },
+"           \       "pycodestyle" : { "enabled" : v:true, },
+"           \       "pydocstyle" : {
+"           \         "enabled" : v:false,
+"           \         "match" : "(?!test_).*\\.py",
+"           \         "matchDir" : "[^\\.].*",
+"           \       },
+"           \       "pyflakes" : { "enabled" : v:true, },
+"           \       "rope_completion" : { "enabled" : v:true, },
+"           \       "yapf" : { "enabled" : v:true, },
+"           \     }}}
+" call nvim_lsp#setup("pyls", settings)
+" lua require('nvim_lsp').pyls.setup{}
+
+" with lsp
+" autocmd Filetype python
+"   \ | setlocal omnifunc=v:lua.vim.lsp.omnifunc
+"   \ | nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+"   \ | nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+"   \ | nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+"   \ | nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+"   \ | nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+"   \ | nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+"   \ | nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+"   \ | nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+"   \ | nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+
+" with YouCompleteMe
+autocmd Filetype python
+     \ | nnoremap <C-]> :call PushHere()<CR>:YcmCompleter GoToDefinition<CR>
+     \ | nnoremap K :YcmCompleter GetDoc<CR>
+
 if (has("termguicolors"))
  set termguicolors
 endif
 
 set splitright
 inoremap <C-g> <Esc>
+vnoremap <C-g> <Esc>
+nnoremap <C-g> :w<CR>
 
-nnoremap <Leader>ve :e $MYVIMRC<CR>
-nnoremap <Leader>vr :source $MYVIMRC<CR>
+nnoremap <leader>ve :e $MYVIMRC<CR>
+nnoremap <leader>vr :source $MYVIMRC<CR>
 
-" for 'edit previous file'
-nnoremap <leader><leader> :e#<CR>
+noremap <C-o> <C-w>w
+noremap <C-k> :hide<cr>
+noremap <A-l> :vertical resize +5<CR>
+noremap <A-h> :vertical resize -5<CR>
+noremap <A-k> :resize +5<CR>
+noremap <A-j> :resize -5<CR>
 
+function OpenQuakeTerm()
+    " if currently on qterm, toggles is_qterm_prohibit_autohide
+    if exists("b:is_qterm")
+        if !exists("b:is_qterm_prohibit_autohide")
+            let b:is_qterm_prohibit_autohide = 1
+            echo "Turned off auto-hide"
+        else
+            unlet b:is_qterm_prohibit_autohide
+            echo "Turned on auto-hide"
+        endif
+        
+        return
+    endif
+
+    for buf in getbufinfo({'buflisted':1})
+        " echo buf
+        if has_key(buf.variables, 'term_title')
+            if has_key(buf.variables, 'is_qterm')
+                " if it's already shown
+                if !empty(buf.windows)
+                    let l:winnr = win_id2win(buf.windows[0])
+                    execute l:winnr . "wincmd w"
+                    " win_gotoid(buf.windows[0])
+
+                    return
+                endif
+
+                " if there's no windows
+                execute "18split"
+                " TODO why this doesn't work. buffer buf.bufnr
+                execute "buffer " . buf.bufnr
+
+                " restore height
+                if exists("b:qterm_height")
+                    " TODO why this doesn't work, it works as if resize ""  => resize b:qterm_height
+                    execute "resize " . b:qterm_height
+                endif
+                " prefer start on insert mode right after window appears
+                startinsert
+
+                return
+            endif
+        endif
+    endfor
+
+    " if there's no existing qterm
+    execute "18split term://$SHELL"
+    execute "set number!"
+    let b:is_qterm = 1
+    " TODOMARK make it insert mode with 'a' (endof line)
+    startinsert
+endfunction
+
+augroup QuakeTerminalEventGroup
+  autocmd!
+  autocmd WinLeave *
+    \ | if exists("b:is_qterm")
+    \ |   let b:qterm_height = winheight(0)
+    \ |   if !exists("b:is_qterm_prohibit_autohide")
+    \ |     if exists("b:twasimode")
+    \ |     hide
+    \ |     endif
+    \ |   endif
+    \ | endif
+augroup END
 
 if has('nvim')
   " Terminal setting
@@ -85,23 +299,28 @@ if has('nvim')
   tnoremap <C-v><Esc> <Esc>
   tnoremap <C-g> <C-\><C-n>
   tnoremap <C-v><C-g> <C-g>
-  nnoremap <leader>t :vs term://$SHELL<CR>:set number!<CR>i
+  nnoremap <leader>s :call OpenQuakeTerm()<CR>
+  " TODO nnoremap <leader>S :vsplit term://$SHELL<CR>:set number!<CR>i
 
-  noremap <C-o> <C-w>w
-  tnoremap <silent> <C-o> <C-\><C-n>:let w:twasimode=1<CR><C-w>w
+  tnoremap <silent> <C-o> <C-\><C-n>:let b:twasimode=1<CR><C-w>w
+  tnoremap <silent> <leader><leader> <C-\><C-n>:let b:twasimode=1<CR>:e#<CR>
   augroup TerminalFocusSetImode
     autocmd!
-    autocmd WinEnter *
-        \ if exists("w:twasimode")
-        \ | unlet w:twasimode
+    autocmd BufEnter *
+        \ if exists("b:twasimode")
+        \ | unlet b:twasimode
         \ | execute "normal! a"
         \ | endif
+"    autocmd BufWinEnter *
+"        \ echom "BufWinEnter: " . @%
+"    autocmd BufEnter *
+"        \ echom "BufEnter: " . @%
   augroup END
 endif
 
 " https://github.com/neovim/neovim/wiki/FAQ
 " http://vimcasts.org/episodes/show-invisibles/
-nmap <leader>l :set list!<CR>:set number!<CR>:set wrap!<CR>
+nmap <leader>l :set list!<CR>:set number!<CR>:set wrap!<CR>:IndentLinesToggle<CR>
 set list
 set number
 " set listchars=tab:»\ ,eol:¬
@@ -117,140 +336,18 @@ augroup CursorLineOnlyInActiveWindow
   autocmd WinLeave * setlocal nocursorline
 augroup END
 
-" from https://raw.githubusercontent.com/ctaylo21/jarvis/master/config/nvim/init.vim
-" === Denite setup ==="
-try
-" Use ripgrep for searching current directory for files
-" By default, ripgrep will respect rules in .gitignore
-"   --files: Print each file that would be searched (but don't search)
-"   --glob:  Include or exclues files for searching that match the given glob
-"            (aka ignore .git files)
-"
-call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
 
-" Use ripgrep in place of "grep"
-call denite#custom#var('grep', 'command', ['rg'])
+" fzf mappings
+nmap <leader>f :Files<CR>
+nmap <leader>b :Buffers<CR>
+nmap <leader>h :History<CR>
+nmap <leader>t :BTags<CR>
+nmap <leader>T :Tags<CR>
+nmap <leader>/ :Ag<space>
+nmap <leader>c :Commands<CR>
 
-" Custom options for ripgrep
-"   --vimgrep:  Show results with every match on it's own line
-"   --hidden:   Search hidden directories and files
-"   --heading:  Show the file name above clusters of matches from each file
-"   --S:        Search case insensitively if the pattern is all lowercase
-call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
-
-" Recommended defaults for ripgrep via Denite docs
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-
-" Remove date from buffer list
-call denite#custom#var('buffer', 'date_format', '')
-
-" Custom options for Denite
-"   auto_resize             - Auto resize the Denite window height automatically.
-"   prompt                  - Customize denite prompt
-"   direction               - Specify Denite window direction as directly below current pane
-"   winminheight            - Specify min height for Denite window
-"   highlight_mode_insert   - Specify h1-CursorLine in insert mode
-"   prompt_highlight        - Specify color of prompt
-"   highlight_matched_char  - Matched characters highlight
-"   highlight_matched_range - matched range highlight
-let s:denite_options = {'default' : {
-\ 'split': 'floating',
-\ 'start_filter': 1,
-\ 'auto_resize': 1,
-\ 'source_names': 'short',
-\ 'prompt': 'λ ',
-\ 'highlight_matched_char': 'QuickFixLine',
-\ 'highlight_matched_range': 'Visual',
-\ 'highlight_window_background': 'Visual',
-\ 'highlight_filter_background': 'DiffAdd',
-\ 'winrow': 1,
-\ 'vertical_preview': 1
-\ }}
-
-" Loop through denite options and enable them
-function! s:profile(opts) abort
-  for l:fname in keys(a:opts)
-    for l:dopt in keys(a:opts[l:fname])
-      call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
-    endfor
-  endfor
-endfunction
-
-call s:profile(s:denite_options)
-catch
-    echo 'Denite not installed. It should work after running :PlugInstall'
-endtry
-
-" === Denite shorcuts === "
-"   <leader>b - Browser currently open buffers
-"   <leader>f - Browse list of files in current directory
-"   <leader>g - Search current directory for occurences of given term and close window if no results
-"   <leader>j - Search current directory for occurences of word under cursor
-nmap <leader>b :Denite buffer -split=floating -winrow=1<CR>
-nmap <leader>f :DeniteProjectDir file/rec -split=botthm<CR>
-nnoremap <leader>g :<C-u>Denite grep:. -no-empty<CR>
-nnoremap <leader>j :<C-u>DeniteCursorWord grep:.<CR>
-
-" Define mappings while in 'filter' mode
-"   <C-o>         - Switch to normal mode inside of search results
-"   <Esc>         - Exit denite window in any mode
-"   <CR>          - Open currently selected file in any mode
-"   <C-t>         - Open currently selected file in a new tab
-"   <C-v>         - Open currently selected file a vertical split
-"   <C-h>         - Open currently selected file in a horizontal split
-autocmd FileType denite-filter call s:denite_filter_my_settings()
-function! s:denite_filter_my_settings() abort
-  imap <silent><buffer> <C-o>
-  \ <Plug>(denite_filter_quit)
-  inoremap <silent><buffer><expr> <Esc>
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> <Esc>
-  \ denite#do_map('quit')
-  inoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  inoremap <silent><buffer><expr> <C-t>
-  \ denite#do_map('do_action', 'tabopen')
-  inoremap <silent><buffer><expr> <C-v>
-  \ denite#do_map('do_action', 'vsplit')
-  inoremap <silent><buffer><expr> <C-h>
-  \ denite#do_map('do_action', 'split')
-endfunction
-
-" Define mappings while in denite window
-"   <CR>        - Opens currently selected file
-"   q or <Esc>  - Quit Denite window
-"   d           - Delete currenly selected file
-"   p           - Preview currently selected file
-"   <C-o> or i  - Switch to insert mode inside of filter prompt
-"   <C-t>       - Open currently selected file in a new tab
-"   <C-v>       - Open currently selected file a vertical split
-"   <C-h>       - Open currently selected file in a horizontal split
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> <Esc>
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <C-o>
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <C-t>
-  \ denite#do_map('do_action', 'tabopen')
-  nnoremap <silent><buffer><expr> <C-v>
-  \ denite#do_map('do_action', 'vsplit')
-  nnoremap <silent><buffer><expr> <C-h>
-  \ denite#do_map('do_action', 'split')
-endfunction
+" mapping for list location
+nnoremap ge :ALENextWrap<CR>
 
 " TODO too many TERM is opened
 " TODO icycle/helm like buffer replacing
