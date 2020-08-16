@@ -54,6 +54,7 @@ alias monitor_file="inotifywait -m -r -e close -e move --format '%:e %w%f' . | g
 alias wttr="curl wttr.in | lolcat"
 alias inotify="inotifywait -m -r --format '%:e %w%f' ."
 alias watchfclose="inotifywait -m -r -e close -e move --format '%:e %w%f' "
+alias cpufreq="sudo cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq"
 
 # https://github.com/syl20bnr/spacemacs/wiki/Terminal
 #export TERM=xterm-256color
