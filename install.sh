@@ -4,6 +4,7 @@ ln -sf ${PWD}/.irbrc ~/
 ln -sf ${PWD}/.emacs ~/
 ln -sf ${PWD}/.tmux.conf ~/
 ln -sf ${PWD}/.bash_common ~/
+ln -sf ${PWD}/.gitconfig ~/
 ln -sf ${PWD}/.vimrc ~/
 ln -sf ${PWD}/.ackrc ~/
 ln -sf ${PWD}/.ctags ~/
@@ -33,6 +34,6 @@ ln -sf ${PWD}/.config/nvim/init.vim ~/.config/nvim/
 
 echo "Add belows lines into .bashrc"
 echo ""
-echo "if [ -f ~/.bashrc_local ]; then"
-echo "   source ~/.bashrc_local"
+echo "if [ -f ~/.bash_common ]; then"
+echo "   source ~/.bash_common"
 echo "fi"
