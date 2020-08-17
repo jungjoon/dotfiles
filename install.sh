@@ -32,6 +32,9 @@ ln -sf ${PWD}/bin/color_test/24-bit-color.sh ~/bin/color_test/
 mkdir -p ~/.config/nvim
 ln -sf ${PWD}/.config/nvim/init.vim ~/.config/nvim/
 
+# https://github.com/syl20bnr/spacemacs/wiki/Terminal
+tic -x -o ~/.terminfo xterm-24bit.terminfo
+
 echo "Add belows lines into .bashrc"
 echo ""
 echo "if [ -f ~/.bash_common ]; then"
