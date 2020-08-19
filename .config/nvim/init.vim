@@ -62,6 +62,8 @@ nnoremap <silent> mm mm:call PushHere()<cr>
 
 autocmd TermClose * :q
 
+" (vim) curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" (nvim) sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 " :PlugInstall
 call plug#begin("~/.vim/plugged")
 " Plug 'Shougo/denite.nvim'
