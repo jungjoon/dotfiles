@@ -83,6 +83,7 @@ Plug 'ycm-core/YouCompleteMe'
 " Plug 'tmhedberg/SimpylFold'
 " Plug 'thinca/vim-quickrun'
 Plug 'Yggdroot/indentLine'
+Plug 'ShikChen/osc52.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -92,6 +93,9 @@ colorscheme nord
 
 hi StatusLine   ctermfg=15  guifg=#ffffff ctermbg=239 guibg=#949031 cterm=bold gui=bold
 hi StatusLineNC ctermfg=249 guifg=#b2b2b2 ctermbg=237 guibg=#3a3a3a cterm=none gui=none
+
+" Plug ShikChen/osc52.vim
+vnoremap Y y:call SendViaOSC52(getreg('"'))<CR>
 
 " Plugin semshi
 " use semshi for highlight but not for lint/syntax check
@@ -350,6 +354,7 @@ nmap <leader>c :Commands<CR>
 
 " mapping for list location
 nnoremap ge :ALENextWrap<CR>
+
 
 " TODO too many TERM is opened
 " TODO icycle/helm like buffer replacing

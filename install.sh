@@ -23,6 +23,7 @@ ln -sf ${PWD}/bin/objdump_raw ~/bin/
 ln -sf ${PWD}/bin/clcn ~/bin/
 ln -sf ${PWD}/bin/__git_ps1.rb ~/bin/
 ln -sf ${PWD}/bin/tagpush ~/bin/
+ln -sf ${PWD}/bin/osc52 ~/bin/
 
 mkdir -p ~/bin/color_test
 ln -sf ${PWD}/bin/color_test/true_color_test.py ~/bin/color_test/
