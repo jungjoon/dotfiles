@@ -43,9 +43,12 @@ set tags+=./../../../../../../tags
 set tags+=./../../../../../../../tags
 set tags+=./../../../../../../../../tags
 
+noremap <SPACE> <Nop>
+let mapleader=" "
+
 nnoremap <leader>q :qa!<CR>
 " for 'edit previous file'
-nnoremap <leader><leader> :e#<CR>
+nnoremap <leader><leader><leader> :e#<CR>
 
 " buffer list and prepare to switch
 " replaced with denite
@@ -78,12 +81,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'dense-analysis/ale'
 " Plug 'davidhalter/jedi-vhm'
-Plug 'ycm-core/YouCompleteMe'
+" Plug 'ycm-core/YouCompleteMe'
 " Plug 'neovim/nvim-lsp'
 " Plug 'tmhedberg/SimpylFold'
 " Plug 'thinca/vim-quickrun'
 Plug 'Yggdroot/indentLine'
 Plug 'ShikChen/osc52.vim'
+Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 filetype plugin indent on
@@ -221,6 +225,8 @@ set splitright
 inoremap <C-g> <Esc>
 vnoremap <C-g> <Esc>
 nnoremap <C-g> :w<CR>
+
+" map <Leader>m <Plug>(easymotion-prefix)
 
 nnoremap <leader>ve :e $MYVIMRC<CR>
 nnoremap <leader>vr :source $MYVIMRC<CR>
