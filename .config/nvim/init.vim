@@ -1,3 +1,4 @@
+" Building NVIM: make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr2/jungjoon/local/neovim
 " delete all audocmd with default group
 autocmd!
 
