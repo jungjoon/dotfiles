@@ -38,7 +38,7 @@ parse_git_branch() {
 #  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(parse_git_branch)\$ '
 # fi
 
-export PATH=$HOME/bin:$HOME/local/bin:$HOME/local/nvim/bin:$PATH
+export PATH=$HOME/bin:$HOME/local/bin:$HOME/local/neovim/bin:$PATH
 
 which nvim > /dev/null; [ $? -eq 0 ] && alias vi=nvim && alias vimdiff="nvim -d"
 
