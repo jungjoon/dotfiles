@@ -359,7 +359,7 @@ nmap <leader>b :Buffers<CR>
 nmap <leader>h :History<CR>
 nmap <leader>t :BTags<CR>
 nmap <leader>T :Tags<CR>
-nmap <leader>/ :Ag<space>
+nmap <leader>/ :Ag <C-r><C-w>
 nmap <leader>c :Commands<CR>
 
 " mapping for list location
