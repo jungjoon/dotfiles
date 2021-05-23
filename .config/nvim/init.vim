@@ -1,4 +1,4 @@
-" Building NVIM: make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr2/jungjoon/local/neovim
+" Building NVIM: make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=$HOME/local/neovim
 " delete all audocmd with default group
 autocmd!
 
@@ -89,6 +89,7 @@ Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'ShikChen/osc52.vim'
 Plug 'easymotion/vim-easymotion'
+Plug 'dhruvasagar/vim-zoom'
 call plug#end()
 
 filetype plugin indent on
@@ -225,14 +226,17 @@ endif
 set splitright
 inoremap <C-g> <Esc>
 vnoremap <C-g> <Esc>
-nnoremap <C-g> :w<CR>
+nnoremap <C-g> :bd<CR>
+nnoremap <C-q> :q<CR>
 
 " map <Leader>m <Plug>(easymotion-prefix)
+
+nnoremap <leader>w :w<CR>
 
 nnoremap <leader>ve :e $MYVIMRC<CR>
 nnoremap <leader>vr :source $MYVIMRC<CR>
 
-noremap <C-o> <C-w>w
+noremap <C-o> <C-w><C-p>
 noremap <C-k> :hide<cr>
 noremap <A-l> :vertical resize +5<CR>
 noremap <A-h> :vertical resize -5<CR>
@@ -306,17 +310,16 @@ augroup QuakeTerminalEventGroup
 augroup END
 
 if has('nvim')
+  nnoremap <leader>s :call OpenQuakeTerm()<CR>
+
   " Terminal setting
   " Esc/C-g for exit to normal mode
   tnoremap <Esc> <C-\><C-n>
   tnoremap <C-v><Esc> <Esc>
   tnoremap <C-g> <C-\><C-n>
   tnoremap <C-v><C-g> <C-g>
-  nnoremap <leader>s :call OpenQuakeTerm()<CR>
-  " TODO nnoremap <leader>S :vsplit term://$SHELL<CR>:set number!<CR>i
+  tnoremap <silent> <C-o> <C-\><C-n>:let b:twasimode=1<CR><C-w><C-p>
 
-  tnoremap <silent> <C-o> <C-\><C-n>:let b:twasimode=1<CR><C-w>w
-  tnoremap <silent> <leader><leader> <C-\><C-n>:let b:twasimode=1<CR>:e#<CR>
   augroup TerminalFocusSetImode
     autocmd!
     autocmd BufEnter *
